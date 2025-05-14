@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.net.URL?>
+<?import javafx.scene.web.WebView?>
+
+<!-- Move the controller attribute to the ScrollPane which is now the root element -->
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.voyage.voyage.backoffice.controllers.VoyageFormController"
+            fitToWidth="true"
+            fitToHeight="true"
+            pannable="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED">
+            
+    <VBox spacing="10"
+          maxWidth="580"
+          prefWidth="580"
+          alignment="TOP_CENTER"
+          styleClass="form-container">
+        
+        <stylesheets>
+            <URL value="@../../css/styles.css" />
+        </stylesheets>
+        
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20" />
+        </padding>
+        
+        <Label text="Voyage Information" styleClass="form-title" />
+        
+        <GridPane fx:id="formGrid" vgap="10" hgap="10">
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" minWidth="120" />
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="NEVER" minWidth="40" />
+            </columnConstraints>
+            
+            <!-- Destination -->
+            <Label text="Destination *" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="destinationField" promptText="Enter destination or click map to select" 
+                     GridPane.rowIndex="0" GridPane.columnIndex="1" />
+            <Button fx:id="mapButton" GridPane.rowIndex="0" GridPane.columnIndex="2" 
+                    styleClass="icon-button" onAction="#handleOpenMapDialog">
+                <graphic>
+                    <FontIcon iconLiteral="fas-map-marker-alt" iconSize="20" iconColor="#3498db"/>
+                </graphic>
+                <tooltip>
+                    <Tooltip text="Open map to select location" />
+                </tooltip>
+            </Button>
+            
+            <!-- Departure Date -->
+            <Label text="Departure Date *" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <DatePicker fx:id="departureDatePicker" 
+                      GridPane.rowIndex="2" GridPane.columnIndex="1" />
+            
+            <!-- Return Date -->
+            <Label text="Return Date *" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <DatePicker fx:id="returnDatePicker" 
+                      GridPane.rowIndex="4" GridPane.columnIndex="1" />
+            
+            <!-- Price -->
+            <Label text="Price *" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <TextField fx:id="priceField" promptText="Enter price (e.g. 1299.99)" 
+                     GridPane.rowIndex="6" GridPane.columnIndex="1" />
+            
+            <!-- Description -->
+            <Label text="Description" GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.valignment="TOP" />
+            <TextArea fx:id="descriptionField" promptText="Enter voyage description" 
+                    prefHeight="100" wrapText="true"
+                    GridPane.rowIndex="8" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+        </GridPane>
+        
+        <!-- Image Upload Section -->
+        <TitledPane text="Voyage Image" expanded="true" collapsible="true">
+            <VBox spacing="15" alignment="CENTER">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10" />
+                </padding>
+                
+                <!-- Image Preview -->
+                <StackPane styleClass="image-preview-container" minHeight="200">
+                    <Rectangle fx:id="imageBackground" width="300" height="200" styleClass="image-placeholder" />
+                    <ImageView fx:id="imagePreview" fitWidth="300" fitHeight="200" preserveRatio="true" />
+                    <Label fx:id="noImageLabel" text="No image selected" styleClass="placeholder-text" 
+                           visible="true" />
+                </StackPane>
+                
+                <!-- Image Actions -->
+                <HBox spacing="10" alignment="CENTER">
+                    <Button fx:id="selectImageButton" text="Select Image" onAction="#handleSelectImage" />
+                    <Button fx:id="clearImageButton" text="Clear" onAction="#handleClearImage" 
+                            disable="true" />
+                    <Label fx:id="imageNameLabel" styleClass="image-name-label" />
+                </HBox>
+            </VBox>
+        </TitledPane>
+        
+        <!-- Form Actions -->
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" />
+            </padding>
+            <Label text="* Required fields" styleClass="hint-text" HBox.hgrow="ALWAYS" />
+            <Button fx:id="cancelButton" text="Cancel" onAction="#handleCancel" />
+            <Button fx:id="saveButton" text="Save" onAction="#handleSave" styleClass="primary-button" />
+        </HBox>
+    </VBox>
+</ScrollPane>

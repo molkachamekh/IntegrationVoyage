@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.voyage.user.backoffice.controllers.UsersManagementController"
+      spacing="15" styleClass="content-container">
+      
+    <stylesheets>
+        <URL value="@../../css/styles.css" />
+    </stylesheets>
+    
+    <padding>
+        <Insets top="15" right="20" bottom="20" left="20" />
+    </padding>
+    
+    <!-- Search and Actions Bar -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <HBox HBox.hgrow="ALWAYS" alignment="CENTER_LEFT" spacing="10">
+            <FontIcon iconLiteral="fas-search" iconSize="16" />
+            <TextField fx:id="searchField" promptText="Search users..." prefWidth="300" />
+        </HBox>
+        
+        <Button fx:id="addUserButton" styleClass="primary-button" onAction="#handleAddUser">
+            <graphic>
+                <FontIcon iconLiteral="fas-user-plus" iconSize="16" />
+            </graphic>
+            <Label text="Add User" />
+        </Button>
+    </HBox>
+    
+    <!-- Users Table -->
+    <TableView fx:id="usersTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+            <TableColumn fx:id="usernameColumn" text="Username" prefWidth="150" />
+            <TableColumn fx:id="emailColumn" text="Email" prefWidth="200" />
+            <TableColumn fx:id="fullNameColumn" text="Full Name" prefWidth="200" />
+            <TableColumn fx:id="phoneColumn" text="Phone" prefWidth="150" />
+        </columns>
+        <placeholder>
+            <Label text="No users available" />
+        </placeholder>
+    </TableView>
+    
+    <!-- Row Actions -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="editUserButton" styleClass="secondary-button" onAction="#handleEditUser">
+            <graphic>
+                <FontIcon iconLiteral="fas-edit" iconSize="16" />
+            </graphic>
+            <Label text="Edit" />
+        </Button>
+        <Button fx:id="deleteUserButton" styleClass="cancel-button" onAction="#handleDeleteUser">
+            <graphic>
+                <FontIcon iconLiteral="fas-trash-alt" iconSize="16" />
+            </graphic>
+            <Label text="Delete" />
+        </Button>
+    </HBox>
+</VBox>

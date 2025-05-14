@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.voyage.user.frontoffice.controllers.LoginController"
+      alignment="CENTER" spacing="20" styleClass="login-container">
+
+    <stylesheets>
+        <URL value="@../../css/styles.css" />
+    </stylesheets>
+
+    <padding>
+        <Insets top="50" right="50" bottom="50" left="50" />
+    </padding>
+
+    <Label text="Welcome to Voyage" styleClass="title-label" />
+
+    <VBox spacing="10" maxWidth="300">
+        <Label text="Username" />
+        <TextField fx:id="usernameField" promptText="Enter your username" />
+    </VBox>
+
+    <VBox spacing="10" maxWidth="300">
+        <Label text="Password" />
+        <PasswordField fx:id="passwordField" promptText="Enter your password" />
+    </VBox>
+
+    <Label fx:id="errorLabel" styleClass="error-label" visible="false" wrapText="true" />
+    <Label fx:id="errorMessageLabel" styleClass="error-message" visible="false" managed="false" wrapText="true" textAlignment="CENTER" />
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="loginButton" text="Login" styleClass="primary-button" onAction="#handleLogin" />
+        <Button fx:id="registerButton" text="Register" styleClass="secondary-button" onAction="#handleRegister" />
+    </HBox>
+</VBox>

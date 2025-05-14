@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.voyage.voyage.backoffice.controllers.GuidesManagementController"
+      spacing="15" styleClass="content-container">
+      
+    <stylesheets>
+        <URL value="@../../css/styles.css" />
+    </stylesheets>
+    
+    <padding>
+        <Insets top="15" right="20" bottom="20" left="20" />
+    </padding>
+    
+    <!-- Search and Actions Bar -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <HBox HBox.hgrow="ALWAYS" alignment="CENTER_LEFT" spacing="10">
+            <FontIcon iconLiteral="fas-search" iconSize="16" />
+            <TextField fx:id="searchField" promptText="Search guides..." prefWidth="300" />
+        </HBox>
+        
+        <Button fx:id="addGuideButton" styleClass="primary-button" onAction="#handleAddGuide">
+            <graphic>
+                <FontIcon iconLiteral="fas-user-plus" iconSize="16" />
+            </graphic>
+            <Label text="Add Guide" />
+        </Button>
+    </HBox>
+    
+    <!-- Guides Table -->
+    <TableView fx:id="guidesTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+            <TableColumn fx:id="nameColumn" text="Guide Name" prefWidth="200" />
+            <TableColumn fx:id="contactInfoColumn" text="Contact Info" prefWidth="200" />
+            <TableColumn fx:id="languagesColumn" text="Languages" prefWidth="150" />
+            <TableColumn fx:id="voyageColumn" text="Assigned Voyage" prefWidth="150" />
+        </columns>
+        <placeholder>
+            <Label text="No guides available" />
+        </placeholder>
+    </TableView>
+    
+    <!-- Row Actions -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="editGuideButton" styleClass="secondary-button" onAction="#handleEditGuide">
+            <graphic>
+                <FontIcon iconLiteral="fas-edit" iconSize="16" />
+            </graphic>
+            <Label text="Edit" />
+        </Button>
+        <Button fx:id="deleteGuideButton" styleClass="cancel-button" onAction="#handleDeleteGuide">
+            <graphic>
+                <FontIcon iconLiteral="fas-trash-alt" iconSize="16" />
+            </graphic>
+            <Label text="Delete" />
+        </Button>
+    </HBox>
+</VBox>
