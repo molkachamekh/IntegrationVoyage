@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import com.dlsc.formsfx.view.controls.*?>
+
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.voyage.voyage.backoffice.controllers.GuideFormController"
+      spacing="15" styleClass="form-container"
+      prefWidth="400" prefHeight="400">
+
+    <stylesheets>
+        <URL value="@../../css/styles.css" />
+    </stylesheets>
+    
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25" />
+    </padding>
+    
+    <Label styleClass="form-title" text="Guide Information" />
+    
+    <!-- Guide Name Field -->
+    <VBox spacing="5">
+        <Label text="Guide Name *" styleClass="form-label" />
+        <TextField fx:id="guideNameField" promptText="Enter guide name" styleClass="form-field" />
+    </VBox>
+    
+    <!-- Contact Info Field -->
+    <VBox spacing="5">
+        <Label text="Contact Info *" styleClass="form-label" />
+        <TextField fx:id="contactInfoField" promptText="Enter contact information" styleClass="form-field" />
+    </VBox>
+    
+    <!-- Languages Field -->
+    <VBox spacing="5">
+        <Label text="Languages *" styleClass="form-label" />
+        <TextField fx:id="languagesField" promptText="E.g. English, French, Spanish" styleClass="form-field" />
+    </VBox>
+    
+    <!-- Voyage Selection -->
+    <VBox spacing="5">
+        <Label text="Assign to Voyage *" styleClass="form-label" />
+        <ComboBox fx:id="voyageComboBox" promptText="Select a voyage" styleClass="form-combo-box" 
+                 maxWidth="Infinity" />
+    </VBox>
+    
+    <!-- Error Display -->
+    <Label fx:id="errorLabel" styleClass="error-label" wrapText="true" visible="false" />
+    
+    <!-- Buttons -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="cancelButton" text="Cancel" styleClass="cancel-button" 
+               onAction="#handleCancel" />
+        <Button fx:id="saveButton" text="Save" styleClass="primary-button" 
+               onAction="#handleSave" disable="true">
+            <graphic>
+                <FontIcon iconLiteral="fas-save" iconSize="16" />
+            </graphic>
+        </Button>
+    </HBox>
+</VBox>

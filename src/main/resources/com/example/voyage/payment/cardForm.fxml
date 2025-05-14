@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.voyage.payment.controllers.CardFormController"
+      spacing="15"
+      styleClass="form-container"
+      prefWidth="400"
+      maxHeight="600">
+
+    <stylesheets>
+        <URL value="@../css/styles.css" />
+    </stylesheets>
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
+    
+    <!-- Card Form Title -->
+    <HBox alignment="CENTER" styleClass="form-header">
+        <FontIcon iconLiteral="fas-credit-card" iconSize="24" />
+        <Label text="Payment Information" styleClass="form-title" />
+    </HBox>
+    
+    <!-- Booking Info Summary -->
+    <VBox styleClass="payment-summary" spacing="5">
+        <Label text="Booking Summary" styleClass="section-title" />
+        <HBox spacing="10">
+            <Label text="Destination:" styleClass="field-label" />
+            <Label fx:id="destinationLabel" text="No destination" styleClass="field-value" />
+        </HBox>
+        <HBox spacing="10">
+            <Label text="Travel Dates:" styleClass="field-label" />
+            <Label fx:id="datesLabel" text="No dates" styleClass="field-value" />
+        </HBox>
+        <HBox spacing="10">
+            <Label text="Total Amount:" styleClass="field-label" />
+            <Label fx:id="amountLabel" text="" styleClass="payment-amount" />
+        </HBox>
+    </VBox>
+    
+    <Separator />
+    
+    <!-- Payment Method Options -->
+    <VBox spacing="10">
+        <Label text="Select Payment Method" styleClass="section-title" />
+        
+        <!-- Simplified RadioButton approach without direct ToggleGroup reference -->
+        <RadioButton fx:id="newCardRadio" text="Use new card" selected="true" 
+                   onAction="#handlePaymentMethodChange" />
+        
+        <RadioButton fx:id="savedCardRadio" text="Use saved card" 
+                   onAction="#handlePaymentMethodChange" />
+    </VBox>
+    
+    <!-- New Card Form -->
+    <GridPane fx:id="newCardForm" vgap="10" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints hgrow="NEVER" minWidth="100" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+        
+        <!-- Card Number Field -->
+        <Label text="Card Number *" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="cardNumberField" promptText="1234 5678 9012 3456" 
+                  GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        
+        <!-- Expiry Date Fields -->
+        <Label text="Expiry Date *" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <HBox spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="1">
+            <ComboBox fx:id="expiryMonthCombo" promptText="Month" prefWidth="100" />
+            <ComboBox fx:id="expiryYearCombo" promptText="Year" prefWidth="100" />
+        </HBox>
+        
+        <!-- CVV Field -->
+        <Label text="CVV *" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <TextField fx:id="cvvField" promptText="123" maxWidth="80"
+                  GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        
+        <!-- Cardholder Name Field -->
+        <Label text="Name on Card *" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <TextField fx:id="cardholderNameField" promptText="John Doe" 
+                  GridPane.rowIndex="3" GridPane.columnIndex="1" />
+        
+        <!-- Save Card Option -->
+        <CheckBox fx:id="saveCardCheckbox" text="Save this card for future payments" 
+                 GridPane.rowIndex="4" GridPane.columnIndex="1" />
+    </GridPane>
+    
+    <!-- Saved Cards Dropdown - initially hidden -->
+    <VBox fx:id="savedCardForm" spacing="10" visible="false" managed="false">
+        <Label text="Select a saved card" />
+        <ComboBox fx:id="savedCardsCombo" prefWidth="350" />
+    </VBox>
+    
+    <!-- Error Message Display -->
+    <Label fx:id="errorMessageLabel" styleClass="error-label" wrapText="true" visible="false" />
+    
+    <!-- Test Mode Notice -->
+    <VBox styleClass="test-mode-notice" alignment="CENTER">
+        <padding>
+            <Insets top="10" right="0" bottom="10" left="0" />
+        </padding>
+        <Label text="TEST MODE - For testing purposes only" styleClass="test-mode-header"/>
+        <Label text="Card 4242 4242 4242 4242 - Always succeeds" styleClass="test-mode-text"/>
+        <Label text="Card 4000 0000 0000 0002 - Always declined" styleClass="test-mode-text"/>
+        <Label text="Any future expiry date and any 3-digit CVV will work" styleClass="test-mode-text"/>
+    </VBox>
+    
+    <!-- Test Mode Notice -->
+    <HBox alignment="CENTER" styleClass="test-mode-notice">
+        <FontIcon iconLiteral="fas-info-circle" iconSize="16" />
+        <Label text="Test Mode: Use card number 4242 4242 4242 4242 with any future expiry date and any 3-digit CVC." 
+               styleClass="hint-text" />
+    </HBox>
+    
+    <!-- Payment Button Area -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="cancelButton" text="Cancel" onAction="#handleCancel" />
+        <Button fx:id="payButton" text="Make Payment" styleClass="primary-button" onAction="#handlePayment" />
+    </HBox>
+    
+    <!-- Secure Payment Notice -->
+    <HBox alignment="CENTER" styleClass="secure-notice">
+        <FontIcon iconLiteral="fas-lock" iconSize="12" />
+        <Label text="Secure payment powered by Stripe" styleClass="hint-text" />
+    </HBox>
+</VBox>

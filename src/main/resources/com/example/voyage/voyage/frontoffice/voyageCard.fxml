@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.voyage.voyage.frontoffice.controllers.VoyageCardController"
+      styleClass="voyage-card" maxWidth="300" prefWidth="300">
+
+    <stylesheets>
+        <URL value="@../../css/styles.css" />
+    </stylesheets>
+    
+    <!-- Voyage Image -->
+    <ImageView fx:id="voyageImage" fitWidth="300" fitHeight="180" preserveRatio="true" styleClass="voyage-image" />
+    
+    <!-- Voyage Details -->
+    <VBox spacing="5" styleClass="voyage-details">
+        <padding>
+            <Insets top="15" right="15" bottom="15" left="15" />
+        </padding>
+        
+        <Label fx:id="destinationLabel" styleClass="voyage-title" text="Destination Name" />
+        
+        <Label fx:id="descriptionLabel" styleClass="voyage-description" 
+               text="Voyage description goes here..." wrapText="true" />
+        
+        <Separator styleClass="voyage-separator" />
+        
+        <HBox spacing="5" alignment="CENTER_LEFT">
+            <FontIcon iconLiteral="fas-user-tie" iconSize="14" />
+            <Label fx:id="guideLabel" styleClass="voyage-guide" text="Guide: John Doe" />
+        </HBox>
+        
+        <HBox spacing="5" alignment="CENTER_LEFT">
+            <FontIcon iconLiteral="fas-language" iconSize="14" />
+            <Label fx:id="languagesLabel" styleClass="voyage-languages" text="Languages: English, French" />
+        </HBox>
+        
+        <HBox spacing="10" alignment="CENTER" styleClass="voyage-footer">
+            <Label fx:id="priceLabel" styleClass="voyage-price" text="$1200.00" />
+            
+            <Button fx:id="bookNowButton" text="Book Now" styleClass="book-button">
+                <graphic>
+                    <FontIcon iconLiteral="fas-calendar-plus" iconSize="14" />
+                </graphic>
+            </Button>
+        </HBox>
+    </VBox>
+</VBox>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.voyage.voyage.frontoffice.controllers.ClientDashboardController"
+            prefHeight="700.0" prefWidth="1000.0" styleClass="main-container">
+    <stylesheets>
+        <URL value="@../../css/styles.css" />
+    </stylesheets>
+    <!-- Left sidebar for navigation -->
+    <left>
+        <VBox styleClass="sidebar">
+            <padding>
+                <Insets top="20" right="10" bottom="20" left="10"/>
+            </padding>
+            
+            <!-- App title -->
+            <Label text="Voyage" styleClass="app-title"/>
+            
+            <!-- Navigation buttons -->
+            <Button fx:id="homeButton" text="Home" styleClass="nav-button" onAction="#handleHomeButton">
+                <graphic>
+                    <FontIcon iconLiteral="fas-home" iconSize="16"/>
+                </graphic>
+            </Button>
+            
+            <Button fx:id="exploreButton" text="Explore" styleClass="nav-button" onAction="#handleExploreButton">
+                <graphic>
+                    <FontIcon iconLiteral="fas-search" iconSize="16"/>
+                </graphic>
+            </Button>
+            
+            <Button fx:id="bookingsButton" text="My Bookings" styleClass="nav-button" onAction="#handleBookingsButton">
+                <graphic>
+                    <FontIcon iconLiteral="fas-calendar-check" iconSize="16"/>
+                </graphic>
+            </Button>
+            
+            <Button fx:id="profileButton" text="Profile" styleClass="nav-button" onAction="#handleProfileButton">
+                <graphic>
+                    <FontIcon iconLiteral="fas-user" iconSize="16"/>
+                </graphic>
+            </Button>
+            
+            <!-- Spacer to push logout to bottom -->
+            <VBox VBox.vgrow="ALWAYS"/>
+            
+            <!-- Logout button at bottom -->
+            <Button fx:id="logoutButton" text="Logout" styleClass="logout-button" onAction="#handleLogout">
+                <graphic>
+                    <FontIcon iconLiteral="fas-sign-out-alt" iconSize="16"/>
+                </graphic>
+            </Button>
+        </VBox>
+    </left>
+    
+    <!-- Main content area -->
+    <center>
+        <BorderPane>
+            <!-- Header with user info -->
+            <top>
+                <HBox alignment="CENTER_RIGHT" spacing="10" styleClass="header">
+                    <padding>
+                        <Insets top="10" right="20" bottom="10" left="20"/>
+                    </padding>
+                    
+                    <Label fx:id="pageTitle" styleClass="page-title" HBox.hgrow="ALWAYS"/>
+                    
+                    <Label fx:id="userNameLabel" text="Welcome, User"/>
+                    
+                    <Button styleClass="icon-button">
+                        <graphic>
+                            <FontIcon iconLiteral="fas-bell" iconSize="16"/>
+                        </graphic>
+                    </Button>
+                </HBox>
+            </top>
+            
+            <!-- Main content changes based on navigation -->
+            <center>
+                <StackPane fx:id="contentArea">
+                    <!-- Content will be loaded here dynamically -->
+                </StackPane>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>

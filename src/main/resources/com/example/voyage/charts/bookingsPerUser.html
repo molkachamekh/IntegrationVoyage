@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bookings Per User</title>
+    <script>
+        // ResizeObserver polyfill
+        window.ResizeObserver = window.ResizeObserver || function(callback) {
+            const observables = [];
+            const observer = this;
+            
+            this.observe = function(element) {
+                if (observables.some(observable => observable.element === element)) {
+                    return;
+                }
+                
+                const newObservable = {
+                    element: element,
+                    size: {
+                        height: element.clientHeight,
+                        width: element.clientWidth
+                    }
+                };
+                
+                observables.push(newObservable);
+                
+                if (!observer.interval) {
+                    observer.interval = setInterval(() => {
+                        const changedEntries = [];
+                        
+                        for (const observable of observables) {
+                            const newWidth = observable.element.clientWidth;
+                            const newHeight = observable.element.clientHeight;
+                            
+                            if (observable.size.width !== newWidth || observable.size.height !== newHeight) {
+                                observable.size.width = newWidth;
+                                observable.size.height = newHeight;
+                                changedEntries.push({
+                                    target: observable.element,
+                                    contentRect: {
+                                        width: newWidth,
+                                        height: newHeight
+                                    }
+                                });
+                            }
+                        }
+                        
+                        if (changedEntries.length > 0) {
+                            callback(changedEntries);
+                        }
+                    }, 100);
+                }
+            };
+            
+            this.unobserve = function(element) {
+                const index = observables.findIndex(obj => obj.element === element);
+                if (index >= 0) {
+                    observables.splice(index, 1);
+                }
+                
+                if (observables.length === 0) {
+                    clearInterval(observer.interval);
+                    observer.interval = null;
+                }
+            };
+            
+            this.disconnect = function() {
+                clearInterval(observer.interval);
+                observer.interval = null;
+                observables.splice(0);
+            };
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px;
+        }
+        .chart-container {
+            width: 800px;
+            height: 500px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bookings Per User</h1>
+    <div class="chart-container">
+        <canvas id="bookingsChart"></canvas>
+    </div>
+
+    <script>
+        function loadChart(userData) {
+            const ctx = document.getElementById('bookingsChart').getContext('2d');
+            
+            // Parse data from Java
+            const data = JSON.parse(userData);
+            
+            // Extract labels and values
+            const labels = data.map(item => item.name);
+            const values = data.map(item => item.count);
+            
+            // Create chart
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Number of Bookings',
+                        data: values,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Number of Bookings per User',
+                            font: {
+                                size: 18
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Bookings'
+                            },
+                            ticks: {
+                                precision: 0
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Users'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // This will be called from Java
+        function updateChart(userData) {
+            loadChart(userData);
+        }
+    </script>
+</body>
+</html>
