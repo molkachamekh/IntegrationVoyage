@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Voyage Statistics</title>
+    <script>
+        // ResizeObserver polyfill
+        window.ResizeObserver = window.ResizeObserver || function(callback) {
+            const observables = [];
+            const observer = this;
+            
+            this.observe = function(element) {
+                if (observables.some(observable => observable.element === element)) {
+                    return;
+                }
+                
+                const newObservable = {
+                    element: element,
+                    size: {
+                        height: element.clientHeight,
+                        width: element.clientWidth
+                    }
+                };
+                
+                observables.push(newObservable);
+                
+                if (!observer.interval) {
+                    observer.interval = setInterval(() => {
+                        const changedEntries = [];
+                        
+                        for (const observable of observables) {
+                            const newWidth = observable.element.clientWidth;
+                            const newHeight = observable.element.clientHeight;
+                            
+                            if (observable.size.width !== newWidth || observable.size.height !== newHeight) {
+                                observable.size.width = newWidth;
+                                observable.size.height = newHeight;
+                                changedEntries.push({
+                                    target: observable.element,
+                                    contentRect: {
+                                        width: newWidth,
+                                        height: newHeight
+                                    }
+                                });
+                            }
+                        }
+                        
+                        if (changedEntries.length > 0) {
+                            callback(changedEntries);
+                        }
+                    }, 100);
+                }
+            };
+            
+            this.unobserve = function(element) {
+                const index = observables.findIndex(obj => obj.element === element);
+                if (index >= 0) {
+                    observables.splice(index, 1);
+                }
+                
+                if (observables.length === 0) {
+                    clearInterval(observer.interval);
+                    observer.interval = null;
+                }
+            };
+            
+            this.disconnect = function() {
+                clearInterval(observer.interval);
+                observer.interval = null;
+                observables.splice(0);
+            };
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px;
+        }
+        .chart-container {
+            width: 800px;
+            height: 400px;
+            margin: 20px auto;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Voyage Statistics</h1>
+    
+    <h2>Guides per Voyage</h2>
+    <div class="chart-container">
+        <canvas id="guidesChart"></canvas>
+    </div>
+    
+    <h2>Voyages per Period</h2>
+    <div class="chart-container">
+        <canvas id="periodChart"></canvas>
+    </div>
+
+    <script>
+        function loadCharts(guidesData, periodData) {
+            // Parse data from Java
+            const guidesInfo = JSON.parse(guidesData);
+            const periodInfo = JSON.parse(periodData);
+            
+            // Guides per Voyage Chart
+            const guidesCtx = document.getElementById('guidesChart').getContext('2d');
+            new Chart(guidesCtx, {
+                type: 'bar',
+                data: {
+                    labels: guidesInfo.map(item => item.destination),
+                    datasets: [{
+                        label: 'Number of Guides',
+                        data: guidesInfo.map(item => item.guideCount),
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Voyages per Period Chart
+            const periodCtx = document.getElementById('periodChart').getContext('2d');
+            new Chart(periodCtx, {
+                type: 'line',
+                data: {
+                    labels: periodInfo.map(item => item.period),
+                    datasets: [{
+                        label: 'Number of Voyages',
+                        data: periodInfo.map(item => item.count),
+                        backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                        borderColor: 'rgb(255, 159, 64)',
+                        borderWidth: 2,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // This will be called from Java
+        function updateCharts(guidesData, periodData) {
+            loadCharts(guidesData, periodData);
+        }
+    </script>
+</body>
+</html>

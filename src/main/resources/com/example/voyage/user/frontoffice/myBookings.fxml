@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.voyage.user.frontoffice.controllers.MyBookingsController"
+      prefWidth="800" prefHeight="600" styleClass="content-container">
+
+    <stylesheets>
+        <URL value="@../../css/styles.css" />
+    </stylesheets>
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <Label styleClass="form-title" text="My Bookings" HBox.hgrow="ALWAYS" />
+        
+        <Button fx:id="refreshButton" styleClass="secondary-button" onAction="#handleRefresh">
+            <graphic>
+                <FontIcon iconLiteral="fas-sync" iconSize="16" />
+            </graphic>
+            <tooltip>
+                <Tooltip text="Refresh" />
+            </tooltip>
+        </Button>
+        
+        <Button fx:id="closeButton" styleClass="secondary-button" onAction="#handleClose">
+            <graphic>
+                <FontIcon iconLiteral="fas-times" iconSize="16" />
+            </graphic>
+            <tooltip>
+                <Tooltip text="Close" />
+            </tooltip>
+        </Button>
+    </HBox>
+    
+    <Separator>
+        <VBox.margin>
+            <Insets top="10" bottom="10" />
+        </VBox.margin>
+    </Separator>
+    
+    <!-- Bookings Table -->
+    <TableView fx:id="bookingsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="voyageColumn" text="Voyage" prefWidth="200" />
+            <TableColumn fx:id="bookingDateColumn" text="Booking Date" prefWidth="120" />
+            <TableColumn fx:id="departureColumn" text="Departure" prefWidth="120" />
+            <TableColumn fx:id="returnColumn" text="Return" prefWidth="120" />
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="100" />
+        </columns>
+        <placeholder>
+            <Label text="No bookings found" />
+        </placeholder>
+    </TableView>
+    
+    <!-- Actions -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <padding>
+            <Insets top="10" />
+        </padding>
+        
+        <Button fx:id="cancelBookingButton" text="Cancel Booking" styleClass="cancel-button" 
+               onAction="#handleCancelBooking" disable="true">
+            <graphic>
+                <FontIcon iconLiteral="fas-times-circle" iconSize="16" />
+            </graphic>
+        </Button>
+        
+        <Button fx:id="viewDetailsButton" text="View Details" styleClass="secondary-button" 
+               onAction="#handleViewDetails" disable="true">
+            <graphic>
+                <FontIcon iconLiteral="fas-info-circle" iconSize="16" />
+            </graphic>
+        </Button>
+    </HBox>
+</VBox>

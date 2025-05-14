@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.voyage.voyage.backoffice.controllers.VoyagesManagementController"
+      spacing="15" styleClass="content-container">
+      
+    <stylesheets>
+        <URL value="@../../css/styles.css" />
+    </stylesheets>
+    
+    <padding>
+        <Insets top="15" right="20" bottom="20" left="20" />
+    </padding>
+    
+    <!-- Search and Actions Bar -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <HBox HBox.hgrow="ALWAYS" alignment="CENTER_LEFT" spacing="10">
+            <FontIcon iconLiteral="fas-search" iconSize="16" />
+            <TextField fx:id="searchField" promptText="Search destinations..." prefWidth="300" />
+        </HBox>
+        
+        <Button fx:id="addVoyageButton" styleClass="primary-button" onAction="#handleAddVoyage">
+            <graphic>
+                <FontIcon iconLiteral="fas-plus-circle" iconSize="16" />
+            </graphic>
+            <Label text="Add Voyage" />
+        </Button>
+    </HBox>
+    
+    <!-- Voyages Table -->
+    <TableView fx:id="voyagesTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+            <TableColumn fx:id="destinationColumn" text="Destination" prefWidth="200" />
+            <TableColumn fx:id="departureDateColumn" text="Departure Date" prefWidth="150" />
+            <TableColumn fx:id="returnDateColumn" text="Return Date" prefWidth="150" />
+            <TableColumn fx:id="priceColumn" text="Price" prefWidth="100" />
+        </columns>
+        <placeholder>
+            <Label text="No voyages available" />
+        </placeholder>
+    </TableView>
+    
+    <!-- Row Actions -->
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button fx:id="editVoyageButton" styleClass="secondary-button" onAction="#handleEditVoyage">
+            <graphic>
+                <FontIcon iconLiteral="fas-edit" iconSize="16" />
+            </graphic>
+            <Label text="Edit" />
+        </Button>
+        <Button fx:id="deleteVoyageButton" styleClass="cancel-button" onAction="#handleDeleteVoyage">
+            <graphic>
+                <FontIcon iconLiteral="fas-trash-alt" iconSize="16" />
+            </graphic>
+            <Label text="Delete" />
+        </Button>
+    </HBox>
+</VBox>

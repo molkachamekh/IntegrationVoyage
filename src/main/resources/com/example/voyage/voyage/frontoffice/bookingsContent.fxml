@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import java.net.URL?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.voyage.voyage.frontoffice.controllers.BookingsContentController"
+            styleClass="content-pane">
+
+    <stylesheets>
+        <URL value="@../../css/styles.css" />
+    </stylesheets>
+
+    <top>
+        <Label text="My Bookings" styleClass="page-title">
+            <padding>
+                <Insets top="20" right="20" bottom="10" left="20" />
+            </padding>
+        </Label>
+    </top>
+    
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="booking-tabs">
+            <tabs>
+                <Tab text="All Bookings" fx:id="allTab">
+                    <ScrollPane fitToWidth="true" styleClass="transparent-scroll-pane">
+                        <VBox fx:id="allBookingsContainer" spacing="15" styleClass="bookings-container">
+                            <Label fx:id="noBookingsLabel" text="You don't have any bookings yet" 
+                                   styleClass="info-text" visible="false" managed="false" />
+                        </VBox>
+                    </ScrollPane>
+                </Tab>
+                
+                <Tab text="Pending" fx:id="pendingTab">
+                    <ScrollPane fitToWidth="true" styleClass="transparent-scroll-pane">
+                        <VBox fx:id="pendingBookingsContainer" spacing="15" styleClass="bookings-container" />
+                    </ScrollPane>
+                </Tab>
+                
+                <Tab text="Confirmed" fx:id="confirmedTab">
+                    <ScrollPane fitToWidth="true" styleClass="transparent-scroll-pane">
+                        <VBox fx:id="confirmedBookingsContainer" spacing="15" styleClass="bookings-container" />
+                    </ScrollPane>
+                </Tab>
+                
+                <Tab text="Cancelled" fx:id="cancelledTab">
+                    <ScrollPane fitToWidth="true" styleClass="transparent-scroll-pane">
+                        <VBox fx:id="cancelledBookingsContainer" spacing="15" styleClass="bookings-container" />
+                    </ScrollPane>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>
